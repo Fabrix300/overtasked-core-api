@@ -1,0 +1,17 @@
+services:
+  overtasked-db:
+    image: postgres:16
+    container_name: overtasked-db
+    restart: unless-stopped # Puedo usar "always" también
+    environment:
+      POSTGRES_USER: postgres # Usuario que se creará
+      POSTGRES_PASSWORD: postgres # Contraseña para el usuario
+      POSTGRES_DB: overtasked-db
+    ports:
+      - "5433:5432"
+    volumes:
+      - overtasked_postgres_data:/var/lib/postgresql/data # Persistencia de datos
+
+volumes:
+  overtasked_postgres_data:
+    driver: local
