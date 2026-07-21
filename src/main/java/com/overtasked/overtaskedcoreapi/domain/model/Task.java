@@ -1,139 +1,83 @@
 package com.overtasked.overtaskedcoreapi.domain.model;
 
+import com.overtasked.overtaskedcoreapi.domain.enums.TaskPriority;
 import com.overtasked.overtaskedcoreapi.domain.enums.TaskStatus;
-import com.overtasked.overtaskedcoreapi.domain.exception.TaskAlreadyCompletedException;
+import com.overtasked.overtaskedcoreapi.domain.exception.InvalidTaskException;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 public class Task {
 
-    private Long id;
+    private UUID id;
+    private UUID projectId;
+    private UUID creatorId;
+    private UUID assigneeId;
+
     private String title;
     private String description;
     private TaskStatus status;
-    private Integer priority;
-    private Long creatorId;
-    private Long assigneeId;
-    private Long projectId;
+    private TaskPriority priority;
     private LocalDateTime dueDate;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
 
-    public Task(Long id, String title, String description, TaskStatus status, Integer priority, Long creatorId, Long assigneeId, Long projectId, LocalDateTime dueDate, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    private Instant createdAt;
+    private Instant updatedAt;
+
+    public Task(
+            UUID id,
+            UUID projectId,
+            UUID creatorId,
+            UUID assigneeId,
+            String title,
+            String description,
+            TaskStatus status,
+            TaskPriority priority,
+            LocalDateTime dueDate
+    ) {
+        if(title == null || title.isBlank())
+            throw new InvalidTaskException("Error while creating task: Title cannot be null or blank");
+
         this.id = id;
+        this.projectId = projectId;
+        this.creatorId = creatorId;
+        this.assigneeId = assigneeId;
+
         this.title = title;
         this.description = description;
         this.status = status;
         this.priority = priority;
-        this.creatorId = creatorId;
-        this.assigneeId = assigneeId;
-        this.projectId = projectId;
         this.dueDate = dueDate;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+
+        this.createdAt = Instant.now();
+        this.updatedAt = Instant.now();
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public TaskStatus getStatus() {
         return status;
     }
 
-    public void setStatus(TaskStatus status) {
-        this.status = status;
-    }
-
-    public Integer getPriority() {
-        return priority;
-    }
-
-    public void setPriority(Integer priority) {
-        this.priority = priority;
-    }
-
-    public Long getCreatorId() {
-        return creatorId;
-    }
-
-    public void setCreatorId(Long creatorId) {
-        this.creatorId = creatorId;
-    }
-
-    public Long getAssigneeId() {
-        return assigneeId;
-    }
-
-    public void setAssigneeId(Long assigneeId) {
-        this.assigneeId = assigneeId;
-    }
-
-    public Long getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(Long projectId) {
-        this.projectId = projectId;
-    }
-
-    public LocalDateTime getDueDate() {
-        return dueDate;
-    }
-
-    public void setDueDate(LocalDateTime dueDate) {
-        this.dueDate = dueDate;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public void assignTo(Long userId) {
+    public void assignTo(UUID userId){
         this.assigneeId = userId;
     }
 
-    public void complete() {
-        if (this.status == TaskStatus.COMPLETED) {
-            throw new TaskAlreadyCompletedException("The task has already been completed");
-        }
+    public void start(){
+        status = TaskStatus.IN_PROGRESS;
+    }
 
+    public void complete() {
         this.status = TaskStatus.COMPLETED;
     }
 
     public void reopen() {
-        this.status = TaskStatus.TO_DO;
+        this.status = TaskStatus.TODO;
     }
 }
