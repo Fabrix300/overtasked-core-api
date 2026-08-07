@@ -3,6 +3,7 @@ package com.overtasked.overtaskedcoreapi.domain.port.in.createTask;
 import com.overtasked.overtaskedcoreapi.domain.enums.TaskPriority;
 import com.overtasked.overtaskedcoreapi.domain.enums.TaskStatus;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -15,5 +16,5 @@ public record CreateTaskCommand(
         String description,
         TaskStatus status,
         TaskPriority priority,
-        LocalDateTime dueDate
+        Instant dueDate
 ) {}

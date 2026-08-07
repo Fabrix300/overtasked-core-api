@@ -1,4 +1,4 @@
 package com.overtasked.overtaskedcoreapi.domain.policy;
 
-public interface TaskAssignmentPolicy {
+public class TaskAssignmentPolicy {
 }

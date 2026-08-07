@@ -12,6 +12,21 @@ public class User {
     private Instant createdAt;
     private Instant updatedAt;
 
+    public User(
+            UUID id,
+            String name,
+            String email,
+            String password
+    ) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+
+        this.createdAt = Instant.now();
+        this.updatedAt = Instant.now();
+    }
+
     public UUID getId() {
         return id;
     }

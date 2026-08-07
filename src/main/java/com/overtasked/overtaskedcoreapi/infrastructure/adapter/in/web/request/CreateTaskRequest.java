@@ -3,7 +3,7 @@ package com.overtasked.overtaskedcoreapi.infrastructure.adapter.in.web.request;
 import com.overtasked.overtaskedcoreapi.domain.enums.TaskPriority;
 import com.overtasked.overtaskedcoreapi.domain.enums.TaskStatus;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.UUID;
 
 public record CreateTaskRequest(
@@ -13,5 +13,5 @@ public record CreateTaskRequest(
         UUID assigneeId,
         TaskStatus status,
         TaskPriority priority,
-        LocalDateTime dueDate
+        Instant dueDate
 ){}

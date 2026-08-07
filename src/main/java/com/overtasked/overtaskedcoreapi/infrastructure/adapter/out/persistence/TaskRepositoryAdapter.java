@@ -1,9 +1,10 @@
-package com.overtasked.overtaskedcoreapi.infrastructure.adapter.out.persistance.task.repository;
+package com.overtasked.overtaskedcoreapi.infrastructure.adapter.out.persistence;
 
 import com.overtasked.overtaskedcoreapi.domain.model.Task;
 import com.overtasked.overtaskedcoreapi.domain.port.out.TaskRepository;
-import com.overtasked.overtaskedcoreapi.infrastructure.adapter.out.persistance.task.entity.TaskEntity;
-import com.overtasked.overtaskedcoreapi.infrastructure.adapter.out.persistance.task.mapper.TaskPersistenceMapper;
+import com.overtasked.overtaskedcoreapi.infrastructure.adapter.out.persistence.entity.TaskEntity;
+import com.overtasked.overtaskedcoreapi.infrastructure.adapter.out.persistence.mapper.TaskPersistenceMapper;
+import com.overtasked.overtaskedcoreapi.infrastructure.adapter.out.persistence.repository.TaskJpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository

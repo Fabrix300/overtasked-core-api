@@ -11,4 +11,16 @@ public class Project {
     private Instant createdAt;
     private Instant updatedAt;
 
+    public Project(
+            UUID id,
+            String name,
+            String description
+    ) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+
+        this.createdAt = Instant.now();
+        this.updatedAt = Instant.now();
+    }
 }

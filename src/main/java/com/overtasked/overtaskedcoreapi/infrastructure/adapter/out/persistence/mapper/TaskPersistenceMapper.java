@@ -1,8 +1,7 @@
-package com.overtasked.overtaskedcoreapi.infrastructure.adapter.out.persistance.task.mapper;
+package com.overtasked.overtaskedcoreapi.infrastructure.adapter.out.persistence.mapper;
 
-import com.overtasked.overtaskedcoreapi.domain.enums.TaskStatus;
 import com.overtasked.overtaskedcoreapi.domain.model.Task;
-import com.overtasked.overtaskedcoreapi.infrastructure.adapter.out.persistance.task.entity.TaskEntity;
+import com.overtasked.overtaskedcoreapi.infrastructure.adapter.out.persistence.entity.TaskEntity;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -17,9 +16,9 @@ public class TaskPersistenceMapper {
     public Task toDomain(TaskEntity entity) {
         return new Task(
                 entity.getId(),
-                entity.getProjectId(),
-                entity.getCreatorId(),
-                entity.getAssigneeId(),
+                entity.getProject().getId(),
+                entity.getCreator().getId(),
+                entity.getAssignee().getId(),
                 entity.getTitle(),
                 entity.getDescription(),
                 entity.getStatus(),
