@@ -1,7 +1,7 @@
 package com.overtasked.overtaskedcoreapi.infrastructure.adapter.in.web.controller;
 
-import com.overtasked.overtaskedcoreapi.domain.port.in.createTask.CreateTaskResult;
-import com.overtasked.overtaskedcoreapi.domain.port.in.createTask.CreateTaskUseCase;
+import com.overtasked.overtaskedcoreapi.application.port.in.task.createTask.CreateTaskResult;
+import com.overtasked.overtaskedcoreapi.application.service.CreateTaskService;
 import com.overtasked.overtaskedcoreapi.infrastructure.adapter.in.web.mapper.CreateTaskMapper;
 import com.overtasked.overtaskedcoreapi.infrastructure.adapter.in.web.request.CreateTaskRequest;
 import com.overtasked.overtaskedcoreapi.infrastructure.adapter.in.web.response.CreateTaskResponse;
@@ -16,11 +16,11 @@ import java.util.UUID;
 @RequestMapping("/projects/{projectId}/tasks")
 public class CreateTaskController {
 
-    private final CreateTaskUseCase createTaskUseCase;
+    private final CreateTaskService createTaskUseCase;
     private final CreateTaskMapper createTaskMapper;
 
     public CreateTaskController(
-            CreateTaskUseCase createTaskUseCase,
+            CreateTaskService createTaskUseCase,
             CreateTaskMapper createTaskMapper
     ) {
         this.createTaskUseCase = createTaskUseCase;

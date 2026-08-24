@@ -1,7 +1,7 @@
 package com.overtasked.overtaskedcoreapi.infrastructure.adapter.out.persistence;
 
 import com.overtasked.overtaskedcoreapi.domain.model.Project;
-import com.overtasked.overtaskedcoreapi.domain.port.out.ProjectRepository;
+import com.overtasked.overtaskedcoreapi.application.port.out.ProjectRepository;
 import com.overtasked.overtaskedcoreapi.infrastructure.adapter.out.persistence.entity.ProjectEntity;
 import com.overtasked.overtaskedcoreapi.infrastructure.adapter.out.persistence.mapper.ProjectPersistenceMapper;
 import com.overtasked.overtaskedcoreapi.infrastructure.adapter.out.persistence.repository.ProjectJpaRepository;

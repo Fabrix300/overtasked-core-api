@@ -1,7 +1,7 @@
 package com.overtasked.overtaskedcoreapi.infrastructure.adapter.out.persistence;
 
 import com.overtasked.overtaskedcoreapi.domain.model.ProjectMember;
-import com.overtasked.overtaskedcoreapi.domain.port.out.ProjectMemberRepository;
+import com.overtasked.overtaskedcoreapi.application.port.out.ProjectMemberRepository;
 import com.overtasked.overtaskedcoreapi.infrastructure.adapter.out.persistence.mapper.ProjectMemberPersistenceMapper;
 import com.overtasked.overtaskedcoreapi.infrastructure.adapter.out.persistence.repository.ProjectMemberJpaRepository;
 import org.springframework.stereotype.Repository;

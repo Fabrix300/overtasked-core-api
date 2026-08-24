@@ -23,4 +23,9 @@ public class Project {
         this.createdAt = Instant.now();
         this.updatedAt = Instant.now();
     }
+
+    public UUID getId() {
+        return id;
+    }
+
 }

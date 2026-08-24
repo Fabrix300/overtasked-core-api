@@ -21,4 +21,8 @@ public class ProjectMember {
         this.createdAt = Instant.now();
         this.updatedAt = Instant.now();
     }
+
+    public boolean canCreateTasks() {
+        return this.role != ProjectMemberRole.VIEWER;
+    }
 }
