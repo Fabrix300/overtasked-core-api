@@ -1,5 +1,6 @@
 package com.overtasked.overtaskedcoreapi.infrastructure.adapter.out.persistence;
 
+import com.overtasked.overtaskedcoreapi.domain.model.user.Email;
 import com.overtasked.overtaskedcoreapi.domain.model.user.User;
 import com.overtasked.overtaskedcoreapi.application.port.out.UserRepository;
 import com.overtasked.overtaskedcoreapi.infrastructure.adapter.out.persistence.entity.UserEntity;
@@ -25,9 +26,34 @@ public class UserRepositoryAdapter implements UserRepository {
     }
 
     @Override
-    public Optional<User> findById(UUID userId) {
-        Optional<UserEntity> userEntity = repository.findById(userId);
+    public User save(User user) {
+        UserEntity entity = mapper.toEntity(user);
+        UserEntity saved = repository.save(entity);
 
-        return userEntity.map(mapper::toDomain);
+        return mapper.toDomain(saved);
+    }
+
+    @Override
+    public Optional<User> findById(UUID userId) {
+        return repository
+                .findById(userId)
+                .map(mapper::toDomain);
+    }
+
+    @Override
+    public Optional<User> findByEmail(Email email) {
+        return repository
+                .findByEmail(email.value())
+                .map(mapper::toDomain);
+    }
+
+    @Override
+    public boolean existsByEmail(Email email) {
+        return repository.existsByEmail(email.value());
+    }
+
+    @Override
+    public void delete(User user) {
+        repository.delete(mapper.toEntity(user));
     }
 }
