@@ -1,12 +1,14 @@
 package com.overtasked.overtaskedcoreapi.infrastructure.adapter.in.web.mapper;
 
-import com.overtasked.overtaskedcoreapi.domain.port.in.createTask.CreateTaskCommand;
-import com.overtasked.overtaskedcoreapi.domain.port.in.createTask.CreateTaskResult;
+import com.overtasked.overtaskedcoreapi.application.port.in.task.createTask.CreateTaskCommand;
+import com.overtasked.overtaskedcoreapi.application.port.in.task.createTask.CreateTaskResult;
 import com.overtasked.overtaskedcoreapi.infrastructure.adapter.in.web.request.CreateTaskRequest;
 import com.overtasked.overtaskedcoreapi.infrastructure.adapter.in.web.response.CreateTaskResponse;
+import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
+@Component
 public class CreateTaskMapper {
 
     public CreateTaskCommand toCommand(UUID projectId, CreateTaskRequest request){

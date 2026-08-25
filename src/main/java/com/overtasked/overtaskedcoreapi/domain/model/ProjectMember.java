@@ -13,4 +13,16 @@ public class ProjectMember {
     private Instant createdAt;
     private Instant updatedAt;
 
+    public ProjectMember(UUID projectId, UUID userId, ProjectMemberRole role) {
+        this.projectId = projectId;
+        this.userId = userId;
+        this.role = role;
+
+        this.createdAt = Instant.now();
+        this.updatedAt = Instant.now();
+    }
+
+    public boolean canCreateTasks() {
+        return this.role != ProjectMemberRole.VIEWER;
+    }
 }

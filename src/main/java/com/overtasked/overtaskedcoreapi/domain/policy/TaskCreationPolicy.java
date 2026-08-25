@@ -1,25 +1,29 @@
 package com.overtasked.overtaskedcoreapi.domain.policy;
 
-import com.overtasked.overtaskedcoreapi.domain.exception.UserNotProjectMemberException;
-import com.overtasked.overtaskedcoreapi.domain.port.out.ProjectMemberRepository;
-
-import java.util.UUID;
+import com.overtasked.overtaskedcoreapi.domain.exception.TaskCreationNotAllowedException;
+import com.overtasked.overtaskedcoreapi.domain.model.Project;
+import com.overtasked.overtaskedcoreapi.domain.model.ProjectMember;
 
 public class TaskCreationPolicy {
 
-    private final ProjectMemberRepository projectMemberRepository;
+//    public void validateUserBelongsToProject(UUID projectId, UUID userId) {
+//        if (projectMemberRepository.findByProjectIdAndUserId(projectId, userId).isEmpty()) {
+//            String errorMessageTemplate = "Error while creating task: User %s is not member of project %s";
+//
+//            throw new UserNotProjectMemberException(String.format(errorMessageTemplate, userId, projectId));
+//        }
+//    }
 
-    public TaskCreationPolicy(
-            ProjectMemberRepository projectMemberRepository
+    public void validate(
+            Project project,
+            ProjectMember member
     ) {
-        this.projectMemberRepository = projectMemberRepository;
-    }
+//        if (project.isArchived()) {
+//            throw new ProjectArchivedException();
+//        }
 
-    public void validateUserBelongsToProject(UUID projectId, UUID userId) {
-        if (projectMemberRepository.findByProjectIdAndUserId(projectId, userId).isEmpty()) {
-            String errorMessageTemplate = "Error while creating task: User %s is not member of project %s";
-
-            throw new UserNotProjectMemberException(String.format(errorMessageTemplate, userId, projectId));
+        if (!member.canCreateTasks()) {
+            throw new TaskCreationNotAllowedException("TaskCreationPolicy error: Member not allowed to create tasks");
         }
     }
 

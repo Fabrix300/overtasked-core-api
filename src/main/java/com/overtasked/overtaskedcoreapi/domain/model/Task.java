@@ -5,7 +5,6 @@ import com.overtasked.overtaskedcoreapi.domain.enums.TaskStatus;
 import com.overtasked.overtaskedcoreapi.domain.exception.InvalidTaskException;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class Task {
@@ -19,7 +18,7 @@ public class Task {
     private String description;
     private TaskStatus status;
     private TaskPriority priority;
-    private LocalDateTime dueDate;
+    private Instant dueDate;
 
     private Instant createdAt;
     private Instant updatedAt;
@@ -33,7 +32,7 @@ public class Task {
             String description,
             TaskStatus status,
             TaskPriority priority,
-            LocalDateTime dueDate
+            Instant dueDate
     ) {
         if(title == null || title.isBlank())
             throw new InvalidTaskException("Error while creating task: Title cannot be null or blank");
