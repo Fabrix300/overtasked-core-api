@@ -1,5 +1,5 @@
 services:
-  overtaskeddb:
+  overtasked-db:
     image: postgres:16
     container_name: overtasked-db
     restart: unless-stopped # Puedo usar "always" también

@@ -2,8 +2,8 @@ package com.overtasked.overtaskedcoreapi.application.port.out.auth;
 
 import java.time.Instant;
 
-public record GeneratedRefreshToken(
-        String rawToken,
-        String tokenHash,
+public record AccessToken(
+        String value,
         Instant expiresAt
-) {}
+) {
+}

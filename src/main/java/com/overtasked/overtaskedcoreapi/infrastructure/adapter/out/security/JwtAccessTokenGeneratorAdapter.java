@@ -1,7 +1,9 @@
 package com.overtasked.overtaskedcoreapi.infrastructure.adapter.out.security;
 
+import com.overtasked.overtaskedcoreapi.application.port.out.auth.AccessToken;
 import com.overtasked.overtaskedcoreapi.application.port.out.auth.AccessTokenGenerator;
 import com.overtasked.overtaskedcoreapi.domain.model.user.User;
+import com.overtasked.overtaskedcoreapi.infrastructure.adapter.out.shared.SystemClockAdapter;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
@@ -13,25 +15,37 @@ import java.time.Instant;
 public class JwtAccessTokenGeneratorAdapter implements AccessTokenGenerator {
 
     private final JwtEncoder jwtEncoder;
+    private final SystemClockAdapter clock;
 
-    public JwtAccessTokenGeneratorAdapter(JwtEncoder jwtEncoder) {
+    public JwtAccessTokenGeneratorAdapter(
+            JwtEncoder jwtEncoder,
+            SystemClockAdapter clock
+    ) {
         this.jwtEncoder = jwtEncoder;
+        this.clock = clock;
     }
 
     @Override
-    public String generateAccessToken(User user) {
-        Instant now = Instant.now();
+    public AccessToken generateAccessToken(User user) {
+        Instant now = clock.now();
+        Instant expiresAt = now.plusSeconds(900);
 
         JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuer("overtasked")
                 .subject(user.getId().toString())
                 .issuedAt(now)
-                .expiresAt(now.plusSeconds(900)) // 15 min
+                .expiresAt(expiresAt) // 15 min // TODO: make 900 a variable, maybe .env
                 .build();
 
-        return jwtEncoder.encode(
-                JwtEncoderParameters.from(claims)
-        ).getTokenValue();
+        String tokenValue = jwtEncoder
+                .encode(JwtEncoderParameters.from(claims))
+                .getTokenValue();
+
+
+        return new AccessToken(
+                tokenValue,
+                expiresAt
+        );
     }
 
 }

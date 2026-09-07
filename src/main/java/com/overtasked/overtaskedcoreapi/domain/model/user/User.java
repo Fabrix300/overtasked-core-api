@@ -54,6 +54,26 @@ public class User {
         );
     }
 
+    public static User reconstitute(
+            UUID id,
+            Email email,
+            PasswordHash passwordHash,
+            String name,
+            UserStatus status,
+            Instant createdAt,
+            Instant updatedAt
+    ) {
+        return new User(
+                id,
+                email,
+                passwordHash,
+                name,
+                status,
+                createdAt,
+                updatedAt
+        );
+    }
+
     public void changeEmail(Email email, Instant now) {
         this.email = email;
         this.updatedAt = now;
@@ -104,5 +124,53 @@ public class User {
 
     public UUID getId() {
         return id;
+    }
+
+    public Email getEmail() {
+        return email;
+    }
+
+    public void setEmail(Email email) {
+        this.email = email;
+    }
+
+    public PasswordHash getPasswordHash() {
+        return passwordHash;
+    }
+
+    public void setPasswordHash(PasswordHash passwordHash) {
+        this.passwordHash = passwordHash;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public UserStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(UserStatus status) {
+        this.status = status;
+    }
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Instant getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Instant updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }
