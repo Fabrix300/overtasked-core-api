@@ -1,11 +1,11 @@
 package com.overtasked.overtaskedcoreapi.infrastructure.adapter.out.persistence;
 
 import com.overtasked.overtaskedcoreapi.application.port.out.RefreshTokenRepository;
-import com.overtasked.overtaskedcoreapi.application.port.out.shared.Clock;
 import com.overtasked.overtaskedcoreapi.domain.model.RefreshToken;
 import com.overtasked.overtaskedcoreapi.infrastructure.adapter.out.persistence.entity.RefreshTokenEntity;
 import com.overtasked.overtaskedcoreapi.infrastructure.adapter.out.persistence.mapper.RefreshTokenPersistenceMapper;
 import com.overtasked.overtaskedcoreapi.infrastructure.adapter.out.persistence.repository.RefreshTokenJpaRepository;
+import com.overtasked.overtaskedcoreapi.infrastructure.adapter.out.shared.SystemClockAdapter;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,12 +17,12 @@ public class RefreshTokenRepositoryAdapter implements RefreshTokenRepository {
 
     private final RefreshTokenJpaRepository repository;
     private final RefreshTokenPersistenceMapper mapper;
-    private final Clock clock;
+    private final SystemClockAdapter clock;
 
     public RefreshTokenRepositoryAdapter(
             RefreshTokenJpaRepository repository,
             RefreshTokenPersistenceMapper mapper,
-            Clock clock
+            SystemClockAdapter clock
     ) {
         this.repository = repository;
         this.mapper = mapper;

@@ -3,12 +3,15 @@ package com.overtasked.overtaskedcoreapi.infrastructure.adapter.out.security;
 import com.overtasked.overtaskedcoreapi.application.port.out.auth.GeneratedRefreshToken;
 import com.overtasked.overtaskedcoreapi.application.port.out.auth.RefreshTokenGenerator;
 import com.overtasked.overtaskedcoreapi.domain.model.user.User;
+import com.overtasked.overtaskedcoreapi.infrastructure.adapter.out.shared.SystemClockAdapter;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Base64;
 import java.util.HexFormat;
 
@@ -16,6 +19,14 @@ import java.util.HexFormat;
 public class RefreshTokenGeneratorAdapter implements RefreshTokenGenerator {
 
     private final SecureRandom secureRandom = new SecureRandom();
+
+    private final SystemClockAdapter clock;
+
+    public RefreshTokenGeneratorAdapter(
+            SystemClockAdapter clock
+    ) {
+        this.clock = clock;
+    }
 
     @Override
     public GeneratedRefreshToken generateRefreshToken(User user) {
@@ -26,16 +37,17 @@ public class RefreshTokenGeneratorAdapter implements RefreshTokenGenerator {
         String rawToken = Base64.getUrlEncoder()
                 .withoutPadding()
                 .encodeToString(randomBytes);
-
         String tokenHash = hash(rawToken);
+        Instant expiresAt = clock.now().plus(30, ChronoUnit.DAYS); // TODO: Make amount a variable, maybe .env
 
         return new GeneratedRefreshToken(
                 rawToken,
-                tokenHash
+                tokenHash,
+                expiresAt
         );
     }
 
-    private String hash(String rawToken) {
+    public String hash(String rawToken) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
 

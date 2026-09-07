@@ -4,6 +4,6 @@ import com.overtasked.overtaskedcoreapi.domain.model.user.User;
 
 public interface AccessTokenGenerator {
 
-    String generateAccessToken(User user);
+    AccessToken generateAccessToken(User user);
 
 }
