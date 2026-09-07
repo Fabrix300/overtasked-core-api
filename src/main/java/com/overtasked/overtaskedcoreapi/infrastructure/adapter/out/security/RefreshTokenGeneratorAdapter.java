@@ -47,7 +47,7 @@ public class RefreshTokenGeneratorAdapter implements RefreshTokenGenerator {
         );
     }
 
-    private String hash(String rawToken) {
+    public String hash(String rawToken) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
 

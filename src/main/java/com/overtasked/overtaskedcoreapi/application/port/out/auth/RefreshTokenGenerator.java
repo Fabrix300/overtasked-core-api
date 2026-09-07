@@ -6,4 +6,6 @@ public interface RefreshTokenGenerator {
 
     GeneratedRefreshToken generateRefreshToken(User user);
 
+    String hash(String rawToken);
+
 }

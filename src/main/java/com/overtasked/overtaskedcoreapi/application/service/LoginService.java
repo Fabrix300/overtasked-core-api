@@ -2,9 +2,9 @@ package com.overtasked.overtaskedcoreapi.application.service;
 
 import com.overtasked.overtaskedcoreapi.application.exception.InvalidCredentialsException;
 import com.overtasked.overtaskedcoreapi.application.exception.UserInactiveException;
-import com.overtasked.overtaskedcoreapi.application.port.in.user.login.AuthenticationResult;
-import com.overtasked.overtaskedcoreapi.application.port.in.user.login.LoginCommand;
-import com.overtasked.overtaskedcoreapi.application.port.in.user.login.LoginUseCase;
+import com.overtasked.overtaskedcoreapi.application.port.in.auth.login.AuthenticationResult;
+import com.overtasked.overtaskedcoreapi.application.port.in.auth.login.LoginCommand;
+import com.overtasked.overtaskedcoreapi.application.port.in.auth.login.LoginUseCase;
 import com.overtasked.overtaskedcoreapi.application.port.out.RefreshTokenRepository;
 import com.overtasked.overtaskedcoreapi.application.port.out.UserRepository;
 import com.overtasked.overtaskedcoreapi.application.port.out.auth.*;
@@ -49,7 +49,9 @@ public class LoginService implements LoginUseCase {
     public AuthenticationResult execute(LoginCommand command) {
         Email email = new Email(command.email());
 
-        User user = userRepository.findByEmail(email).orElseThrow(InvalidCredentialsException::new);
+        User user = userRepository
+                .findByEmail(email)
+                .orElseThrow(InvalidCredentialsException::new);
 
         if (!user.isActive()) {
             throw new UserInactiveException(user.getId());
@@ -59,25 +61,23 @@ public class LoginService implements LoginUseCase {
             throw new InvalidCredentialsException();
         }
 
-        AccessToken accessToken = accessTokenGenerator.generateAccessToken(user);
-
-        GeneratedRefreshToken generated = refreshTokenGenerator.generateRefreshToken(user);
-
+        AccessToken generatedAccessToken = accessTokenGenerator.generateAccessToken(user);
+        GeneratedRefreshToken generatedRefreshToken = refreshTokenGenerator.generateRefreshToken(user);
         Instant now = clock.now();
 
         RefreshToken refreshToken = RefreshToken.create(
                 user.getId(),
-                generated.tokenHash(),
-                generated.expiresAt(),
+                generatedRefreshToken.tokenHash(),
+                generatedRefreshToken.expiresAt(),
                 now
         );
 
         refreshTokenRepository.save(refreshToken);
 
         return new AuthenticationResult(
-                accessToken.value(),
-                generated.rawToken(),
-                Duration.between(now, accessToken.expiresAt()).toSeconds()
+                generatedAccessToken.value(),
+                generatedRefreshToken.rawToken(),
+                Duration.between(now, generatedAccessToken.expiresAt()).toSeconds()
         );
     }
 
