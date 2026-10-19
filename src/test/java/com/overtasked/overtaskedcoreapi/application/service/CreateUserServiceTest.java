@@ -44,7 +44,8 @@ public class CreateUserServiceTest {
         createUserService = new CreateUserService(
                 userRepository,
                 passwordHasher,
-                clock);
+                clock
+        );
     }
 
     @Test
